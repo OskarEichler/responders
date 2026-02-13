@@ -1,6 +1,6 @@
 # Responders
 
-[![Gem Version](https://fury-badge.herokuapp.com/rb/responders.svg)](http://badge.fury.io/rb/responders)
+[![Gem Version](https://badge.fury.io/rb/responders.svg)](https://badge.fury.io/rb/responders)
 
 A set of responders modules to dry up your Rails app.
 
