@@ -1,5 +1,8 @@
 name: RuboCop
 
+permissions:
+  contents: read
+
 on:
   push:
     branches:
