@@ -1,5 +1,6 @@
 ## Unreleased
 
+* Support `allow_other_host` option in `respond_with`, forwarded to `redirect_to` (#255)
 * Ruby 4.0 support (no changes required)
 
 ## 3.2.0
