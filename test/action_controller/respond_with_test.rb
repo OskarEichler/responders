@@ -61,6 +61,10 @@ class RespondWithController < ApplicationController
     respond_with(@customer, status: 123, location: "http://test.host/")
   end
 
+  def using_resource_with_allow_other_host
+    respond_with(resource, location: "http://example.com/", allow_other_host: true)
+  end
+
   def using_resource_with_responder
     responder = proc { |c, r, o| c.render body: "Resource name is #{r.first.name}" }
     respond_with(resource, responder: responder)
@@ -751,6 +755,15 @@ class RespondWithControllerTest < ActionController::TestCase
         patch :using_resource
         assert_equal 301, @response.status
       end
+    end
+  end
+
+  def test_using_resource_with_allow_other_host
+    with_test_route_set do
+      post :using_resource_with_allow_other_host
+      assert_equal 302, @response.status
+      assert_equal "http://example.com/", @response.location
+      assert @response.redirect?
     end
   end
 

@@ -103,6 +103,11 @@ module ActionController # :nodoc:
   #
   #   respond_with(@project, location: root_path)
   #
+  # If the location is an external URL, pass <code>allow_other_host: true</code>
+  # to permit the redirect (this is forwarded to <code>redirect_to</code>):
+  #
+  #   respond_with(@project, location: "https://example.com/", allow_other_host: true)
+  #
   # To customize the failure scenario, you can pass a block to
   # <code>respond_with</code>:
   #
@@ -207,7 +212,7 @@ module ActionController # :nodoc:
       elsif has_errors? && default_action
         render error_rendering_options
       else
-        redirect_to navigation_location, status: redirect_status
+        redirect_to navigation_location, redirect_options
       end
     end
 
@@ -313,6 +318,12 @@ module ActionController # :nodoc:
       else
         { action: default_action, status: error_status }
       end
+    end
+
+    def redirect_options
+      redirect_options = { status: redirect_status }
+      redirect_options[:allow_other_host] = options[:allow_other_host] if options.key?(:allow_other_host)
+      redirect_options
     end
   end
 end
