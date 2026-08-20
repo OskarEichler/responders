@@ -732,6 +732,14 @@ class RespondWithControllerTest < ActionController::TestCase
     end
   end
 
+  def test_api_behavior_error_is_not_caused_by_missing_template
+    @controller = CsvRespondWithController.new
+    error = assert_raise ActionController::MissingRenderer do
+      get :index, format: "csv"
+    end
+    assert_nil error.cause
+  end
+
   def test_error_is_raised_if_no_respond_to_is_declared_and_respond_with_is_called
     @controller = EmptyRespondWithController.new
     @request.accept = "*/*"
