@@ -286,7 +286,8 @@ module ActionController # :nodoc:
 
     # Check whether the necessary Renderer is available
     def has_renderer?
-      Renderers::RENDERERS.include?(format)
+      renderers = Renderers.respond_to?(:all) ? Renderers.all : Renderers::RENDERERS
+      renderers.include?(format)
     end
 
     def has_view_rendering?
