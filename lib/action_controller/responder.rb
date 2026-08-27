@@ -192,14 +192,14 @@ module ActionController # :nodoc:
     # responds to :to_format and display it.
     #
     def to_format
-      if !get? && has_errors? && !response_overridden?
-        display_errors
-      elsif has_view_rendering? || response_overridden?
-        default_render
-      else
-        api_behavior
+      begin
+        if !get? && has_errors? && !response_overridden?
+          return display_errors
+        elsif has_view_rendering? || response_overridden?
+          return default_render
+        end
+      rescue ActionView::MissingTemplate
       end
-    rescue ActionView::MissingTemplate
       api_behavior
     end
 
